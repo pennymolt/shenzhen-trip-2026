@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深圳三代同堂舒適科技之旅 2026 - 完整行程網頁</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Noto Sans TC', sans-serif; }
+        .day-section { min-height: 100vh; padding: 100px 24px 80px; }
+        .time-badge { @apply inline-block bg-teal-100 text-teal-700 px-2 py-1 rounded text-xs font-bold mr-2; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Sticky Nav + Progress -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur border-b border-teal-100 shadow-sm transition-all duration-300" id="navbar">
+        <div class="max-w-6xl mx-auto px-4 py-2 flex items-center justify-between">
+            <a href="#hero" class="text-lg font-bold text-teal-600 hover:scale-105">🇨🇳 SHENZHEN 2026</a>
+            <div class="flex items-center gap-3 overflow-x-auto no-scrollbar">
+                <span id="exchange-rate" class="text-xs font-bold bg-teal-100 text-teal-700 px-2 py-1 rounded-full whitespace-nowrap">匯率載入中...</span>
+                <a href="#overview" class="text-xs font-bold px-2 whitespace-nowrap">行程總覽</a>
+                <a href="#day1" class="text-xs hover:text-teal-600 px-1 whitespace-nowrap">D1</a>
+                <a href="#day2" class="text-xs hover:text-teal-600 px-1 whitespace-nowrap">D2</a>
+                <a href="#day3" class="text-xs hover:text-teal-600 px-1 whitespace-nowrap">D3</a>
+                <a href="#day4" class="text-xs hover:text-teal-600 px-1 whitespace-nowrap">D4</a>
+            </div>
+        </div>
+        <div class="h-1 bg-gray-200"><div id="scroll-progress" class="h-full bg-teal-500 transition-all duration-100" style="width:0%"></div></div>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="day-section flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-teal-50 to-white pt-20">
+        <div class="absolute top-0 left-0 w-96 h-96 bg-teal-200 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-pulse"></div>
+        <div class="absolute bottom-0 right-0 w-[500px] h-[500px] bg-emerald-200 rounded-full mix-blend-multiply blur-3xl opacity-30 animate-pulse" style="animation-delay:2s;"></div>
+        <div class="relative z-10 text-center max-w-4xl mx-auto px-4">
+            <span class="inline-block bg-teal-100 text-teal-800 text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full mb-4">三代同堂舒適科技度假</span>
+            <h1 class="text-5xl md:text-7xl font-black mb-4 text-gray-900 tracking-tight">汪家深圳大冒險</h1>
+            <p class="text-2xl md:text-3xl text-teal-600 font-bold mb-2">2026.07.01 — 07.04</p>
+            <p class="text-lg text-gray-500 mb-10">4天3夜 · 科技與現代美學之旅 · Family Trip</p>
+            <div id="countdown" class="grid grid-cols-4 gap-4 mb-10 max-w-2xl mx-auto">
+                <div class="bg-white shadow-lg border border-teal-100 p-4 rounded-xl"><div id="days" class="text-4xl font-black text-teal-600">00</div><div class="text-xs text-gray-400 uppercase">天</div></div>
+                <div class="bg-white shadow-lg border border-teal-100 p-4 rounded-xl"><div id="hours" class="text-4xl font-black text-teal-600">00</div><div class="text-xs text-gray-400 uppercase">時</div></div>
+                <div class="bg-white shadow-lg border border-teal-100 p-4 rounded-xl"><div id="minutes" class="text-4xl font-black text-teal-600">00</div><div class="text-xs text-gray-400 uppercase">分</div></div>
+                <div class="bg-white shadow-lg border border-teal-100 p-4 rounded-xl"><div id="seconds" class="text-4xl font-black text-teal-600">00</div><div class="text-xs text-gray-400 uppercase">秒</div></div>
+            </div>
+            <a href="#overview" class="inline-block bg-teal-600 hover:bg-teal-700 text-white font-bold px-8 py-4 rounded-full shadow-lg transition-all transform hover:-translate-y-1">開始探索行程 ✨</a>
+        </div>
+    </section>
+
+    <!-- Overview -->
+    <section id="overview" class="py-20 bg-white border-t border-gray-100">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-black text-gray-900">📋 行程總覽與三大核心設定</h2>
+                <p class="text-gray-500 mt-2">為爺爺與孫子們量身定制，兼顧體力與樂趣</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-teal-50/50 p-8 rounded-3xl border border-teal-100">
+                    <span class="text-4xl mb-4 block">👨‍👩‍👦‍👦</span>
+                    <h3 class="text-xl font-bold mb-2 text-teal-800">完美旅行成員</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed mb-4">4 人同遊：<strong>Mac、爺爺、Lucas (17歲)、Riley (13歲)</strong>。無 Fiona，行程全面針對長輩與兩位青少年體力與興趣進行黃金平衡。</p>
+                </div>
+                <div class="bg-emerald-50/50 p-8 rounded-3xl border border-emerald-100">
+                    <span class="text-4xl mb-4 block">🏨</span>
+                    <h3 class="text-xl font-bold mb-2 text-emerald-800">福田香格里拉大酒店</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">位於深圳福田 CBD 正核心。頂級中式大氣奢華最合長輩胃口，餐飲極佳（自助早餐超豐盛），且緊鄰市民中心與各大活動景點，出門即達，爺爺完全不累！</p>
+                </div>
+                <div class="bg-sky-50/50 p-8 rounded-3xl border border-sky-100">
+                    <span class="text-4xl mb-4 block">🚢</span>
+                    <h3 class="text-xl font-bold mb-2 text-sky-800">豪華通關 & 滴滴商務</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        <strong>去程</strong>：Alphard 跨境專車由香港機場直達酒店，免下車通關。<br>
+                        <strong>市區</strong>：隨叫隨到 6 人座「滴滴商務車」，彈性極大。<br>
+                        <strong>回程</strong>：蛇口碼頭快輪，直接在深圳行李直掛、兩手空空，爽拿 480 港幣現金退稅。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 1 -->
+    <section id="day1" class="day-section bg-teal-50/30">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="mb-8">
+                <span class="text-teal-600 font-bold tracking-widest uppercase">DAY 1 - 7/1 (三)</span>
+                <h2 class="text-5xl font-black mt-2 text-gray-900">✈️ 舒適抵達 & 科技噴泉晚餐</h2>
+            </div>
+            <header class="relative h-[40vh] rounded-3xl overflow-hidden mb-10 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=2070&auto=format&fit=crop" alt="Shenzhen Night" class="absolute w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent flex items-end p-8">
+                    <p class="text-white text-xl font-medium">Shenzhen Sea World, beautiful water show</p>
+                </div>
+            </header>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-4">⏰ 每日行程安排</h3>
+                    <ul class="space-y-3 text-gray-700 text-sm">
+                        <li><span class="time-badge">08:00–09:55</span> 星宇 JX233 飛抵香港機場</li>
+                        <li><span class="time-badge">10:30–12:00</span> 7人座 Alphard 保姆車接機，免下車通關直達福田</li>
+                        <li><span class="time-badge">12:30–14:30</span> 午餐：【潮汕大目牛肉火鍋】（極品雪花牛超嫩）</li>
+                        <li><span class="time-badge">14:30–16:30</span> 華為、小米全球旗艦店（店內有大沙發供長輩休息）</li>
+                        <li><span class="time-badge">17:30–20:30</span> 海上世界，預訂景觀座一邊吃飯一邊看音樂噴泉秀</li>
+                        <li><span class="time-badge">20:30</span> 滴滴商務車接回福田香格里拉大酒店辦理入住</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-br from-teal-100 to-emerald-50 p-8 rounded-2xl flex flex-col justify-center">
+                    <span class="text-5xl mb-4">🥩🍲</span>
+                    <h4 class="text-xl font-bold text-teal-800 mb-2">斯容吃貨秘笈</h4>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-2">
+                        大目牛肉火鍋的肉質超級好！特別幫爺爺安排雪花牛肉和嫩肉，入口即化，牙口不好的長輩也能大飽口福。
+                    </p>
+                    <p class="text-gray-700 text-sm">
+                        晚上蛇口海上世界的音樂噴泉在 19:00 和 20:00 各有一場。我們提前訂好可以直接看窗外噴泉的座，吹冷氣看秀，爺爺完全不用罰站。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 2 -->
+    <section id="day2" class="day-section bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="mb-8">
+                <span class="text-emerald-600 font-bold tracking-widest uppercase">DAY 2 - 7/2 (四)</span>
+                <h2 class="text-5xl font-black mt-2 text-gray-900">🚗 大疆無人機 & 下午分頭行動</h2>
+            </div>
+            <header class="relative h-[40vh] rounded-3xl overflow-hidden mb-10 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" alt="Technology" class="absolute w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent flex items-end p-8">
+                    <p class="text-white text-xl font-medium">Huaqiangbei & Shenzhen Museum, Tech vs Relax</p>
+                </div>
+            </header>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-2xl font-bold text-emerald-700 mb-4">⏰ 每日行程安排</h3>
+                    <ul class="space-y-3 text-gray-700 text-sm">
+                        <li><span class="time-badge">08:30–09:30</span> 酒店享用豪華自助早餐（孫子吃超飽）</li>
+                        <li><span class="time-badge">09:30–11:30</span> 【大疆 DJI 歡樂海岸旗艦店】看無人機飛行演示</li>
+                        <li><span class="time-badge">12:00–13:30</span> 午餐：【潤園四季椰子雞】溫潤甜美，雞肉軟嫩</li>
+                        <li><span class="time-badge">14:00–17:30</span> <strong>【下午兵分兩路（福田主場）】</strong></li>
+                        <li><span class="text-xs text-teal-600 font-bold ml-4">👦 科技組：</span>殺進【華強北電子步行街】，給兒子們的科技震撼教育</li>
+                        <li><span class="text-xs text-emerald-600 font-bold ml-4">🧓 慢活組：</span>A 方案回酒店大廳優雅下午茶＋睡午覺；B 方案逛【深圳博物館】（無障礙，吹冷氣聽導覽）</li>
+                        <li><span class="time-badge">18:00–20:00</span> 晚餐【炳勝品味】會合（粵菜經典，脆皮燒鵝必點）</li>
+                        <li><span class="time-badge">20:15–21:00</span> 【市民中心廣場】散步近距離看 CBD 大樓群都市燈光秀</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-br from-emerald-100 to-teal-50 p-8 rounded-2xl flex flex-col justify-center">
+                    <span class="text-5xl mb-4">🚁🦖🧓</span>
+                    <h4 class="text-xl font-bold text-emerald-800 mb-2">斯容兵分兩路祕技</h4>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-2">
+                        兩條路線都在福田 CBD，車程都在 10 分鐘內！用滴滴商務車一鍵點擊，科技組去華強北，爺爺舒舒服服回大本營或在博物館看歷史，傍晚在炳勝會合毫無折騰！
+                    </p>
+                    <p class="text-gray-700 text-sm">
+                        晚餐後的市民中心廣場燈光秀（20:15 開演），剛好就在晚餐旁邊，看完直接走回香格里拉，堪稱行程安排的魔術。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 3 -->
+    <section id="day3" class="day-section bg-teal-50/30">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="mb-8">
+                <span class="text-sky-600 font-bold tracking-widest uppercase">DAY 3 - 7/3 (五)</span>
+                <h2 class="text-5xl font-black mt-2 text-gray-900">🎡 太空艙摩天輪 & 頂級老字號粵點</h2>
+            </div>
+            <header class="relative h-[40vh] rounded-3xl overflow-hidden mb-10 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop" alt="Ferris Wheel" class="absolute w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent flex items-end p-8">
+                    <p class="text-white text-xl font-medium">OH Bay Ferris Wheel & Fan Lou Cantonese Dim Sum</p>
+                </div>
+            </header>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm">
+                    <h3 class="text-2xl font-bold text-sky-700 mb-4">⏰ 每日行程安排</h3>
+                    <ul class="space-y-3 text-gray-700 text-sm">
+                        <li><span class="time-badge">08:30–10:00</span> 讓爺爺睡飽，在香格里拉享用自助餐</li>
+                        <li><span class="time-badge">10:00–11:30</span> 【深圳人才公園】晨間慢步，全平坦無障礙海景步道</li>
+                        <li><span class="time-badge">12:30–14:30</span> 【歡樂海岸】水上江南林蔭漫步與悠閒茶室</li>
+                        <li><span class="time-badge">15:00–18:00</span> 【歡樂港灣】搭乘「灣區之光」128米巨型摩天輪</li>
+                        <li><span class="time-badge">18:30–20:30</span> 晚餐：老字號【蘩樓】純手工粵式點心，品茗聊天</li>
+                        <li><span class="time-badge">20:30</span> 滴滴商務車一車回酒店休息</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-br from-sky-100 to-teal-50 p-8 rounded-2xl flex flex-col justify-center">
+                    <span class="text-5xl mb-4">🎡🥟🍵</span>
+                    <h4 class="text-xl font-bold text-sky-800 mb-2">高空無障礙太空艙</h4>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-2">
+                        「灣區之光」摩天輪是全景、超大、帶空調的平穩太空艙設計，裡面有長椅可坐。一圈 30 分鐘，爺爺完全不需要走路，吹著冷氣、坐著沙發就能飽覽前海灣無敵夕陽！
+                    </p>
+                    <p class="text-gray-700 text-sm">
+                        晚上吃老字號蘩樓，手工現點現做。點一壺鐵觀音、配上露筍蝦餃皇、流沙包、紅米腸，這是最正宗優雅的廣東茶樓氛圍。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Day 4 -->
+    <section id="day4" class="day-section bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="mb-8">
+                <span class="text-teal-600 font-bold tracking-widest uppercase">DAY 4 - 7/4 (六)</span>
+                <h2 class="text-5xl font-black mt-2 text-gray-900">🏙️ 541米雲端地標 & 蛇口快輪免提直達</h2>
+            </div>
+            <header class="relative h-[40vh] rounded-3xl overflow-hidden mb-10 shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?q=80&w=2070&auto=format&fit=crop" alt="High-Rise City" class="absolute w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent flex items-end p-8">
+                    <p class="text-white text-xl font-medium">Ping An Sky Center & Shekou Ferry direct to HKG</p>
+                </div>
+            </header>
+
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-2xl font-bold text-teal-700 mb-4">⏰ 每日行程安排</h3>
+                    <ul class="space-y-3 text-gray-700 text-sm">
+                        <li><span class="time-badge">10:00–12:00</span> 【平安金融中心 Free Sky】直上 116 樓雲端，看玻璃觀景台</li>
+                        <li><span class="time-badge">12:00–14:00</span> 回酒店退房，大廳沙發稍作午休或享用下午茶</li>
+                        <li><span class="time-badge">14:00–15:30</span> 【海岸城】最後採購：必買「鮑師傅糕點」、茶顏悅色</li>
+                        <li><span class="time-badge">15:30–16:00</span> 滴滴商務車直達【蛇口郵輪母港】（車程約30分鐘）</li>
+                        <li><span class="time-badge">16:00–16:45</span> 碼頭 2 樓辦理聯程登機，<strong>星宇航空行李直掛台北！兩手空空</strong></li>
+                        <li><span class="time-badge">17:30–18:00</span> 搭乘 17:30 班次快輪（30分鐘航程）直達香港機場管制區</li>
+                        <li><span class="time-badge">18:00–19:30</span> 機場退稅櫃檯<strong>當場領取每人 120 港幣現金！四人共 480 港幣</strong></li>
+                        <li><span class="time-badge">20:15–22:05</span> 搭乘星宇航空 **JX236** 愉快返台</li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-br from-teal-100 to-emerald-50 p-8 rounded-2xl flex flex-col justify-center">
+                    <span class="text-5xl mb-4">🚢💰🎒</span>
+                    <h4 class="text-xl font-bold text-teal-800 mb-2">斯容神級通關祕技</h4>
+                    <p class="text-gray-700 text-sm leading-relaxed mb-2">
+                        在蛇口碼頭，你們就已經辦妥行李直掛和出境，不需要入境香港！到了香港機場，直接去領 480 元港幣的現金退稅，當場買巧克力和玩具！
+                    </p>
+                    <p class="text-gray-700 text-sm">
+                        高鐵要拿著行李暴走 1 小時過關、轉機場快線。我們在蛇口就把行李給星宇，兩手空空坐船 30 分鐘直接進香港機場登機口，優雅無比，對爺爺體力是完美的保護。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 text-center text-gray-400 text-sm bg-white border-t border-gray-100">
+        <p>© 2026 汪家深圳科技舒適之旅 | 斯容 (Szu Jung) 策劃</p>
+        <p class="mt-2 text-xs">匯率數據：open.er-api.com | 圖片：Unsplash</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Countdown to July 1, 2026 08:00:00 (StarLux JX233 Departure)
+        const targetDate = new Date("2026-07-01T08:00:00").getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<div class='col-span-4 text-2xl font-bold text-teal-600 py-4'>旅程已展開！🚀</div>";
+                return;
+            }
+            const d = Math.floor(distance / (1000*60*60*24)), h = Math.floor((distance%(1000*60*60*24))/(1000*60*60)), m = Math.floor((distance%(1000*60*60))/(1000*60)), s = Math.floor((distance%(1000*60))/1000);
+            document.getElementById("days").innerText = d.toString().padStart(2,'0');
+            document.getElementById("hours").innerText = h.toString().padStart(2,'0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2,'0');
+            document.getElementById("seconds").innerText = s.toString().padStart(2,'0');
+        }
+        setInterval(updateCountdown, 1000); updateCountdown();
+
+        // Exchange Rate (CNY)
+        async function updateExchangeRate() {
+            try {
+                const r = await fetch('https://open.er-api.com/v6/latest/CNY');
+                const d = await r.json(); 
+                document.getElementById('exchange-rate').innerText = `1 RMB ≈ ${d.rates.TWD.toFixed(2)} TWD`;
+            } catch { 
+                document.getElementById('exchange-rate').innerText = `1 RMB ≈ 4.50 TWD`; 
+            }
+        }
+        updateExchangeRate(); setInterval(updateExchangeRate, 3600000);
+
+        // Scroll Progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById("scroll-progress").style.width = (winScroll/height*100) + "%";
+        });
+
+        // Nav hide/show
+        let lastScroll = 0; window.addEventListener('scroll', () => {
+            const curr = window.scrollY;
+            document.getElementById('navbar').style.transform = curr > lastScroll && curr > 200 ? 'translateY(-100%)' : 'translateY(0)';
+            lastScroll = curr;
+        });
+    </script>
+</body>
+</html>
