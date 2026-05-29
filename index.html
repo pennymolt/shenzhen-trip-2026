@@ -22,6 +22,7 @@
             <div class="flex items-center gap-3 overflow-x-auto no-scrollbar">
                 <span id="exchange-rate" class="text-xs font-bold bg-teal-100 text-teal-700 px-2 py-1 rounded-full whitespace-nowrap">匯率載入中...</span>
                 <a href="#overview" class="text-xs font-bold px-2 whitespace-nowrap">行程總覽</a>
+                <a href="#tickets" class="text-xs font-bold px-2 whitespace-nowrap text-sky-600">已訂機票</a>
                 <a href="#day1" class="text-xs hover:text-teal-600 px-1 whitespace-nowrap">D1</a>
                 <a href="#day2" class="text-xs hover:text-teal-600 px-1 whitespace-nowrap">D2</a>
                 <a href="#day3" class="text-xs hover:text-teal-600 px-1 whitespace-nowrap">D3</a>
@@ -76,6 +77,133 @@
                         <strong>市區</strong>：隨叫隨到 6 人座「滴滴商務車」，彈性極大。<br>
                         <strong>回程</strong>：蛇口碼頭快輪，直接在深圳行李直掛、兩手空空，爽拿 480 港幣現金退稅。
                     </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tickets Section -->
+    <section id="tickets" class="py-16 bg-sky-50/30 border-t border-b border-sky-100">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex items-center gap-3 mb-8 justify-center md:justify-start">
+                <span class="text-3xl">🎫</span>
+                <div>
+                    <h2 class="text-3xl font-black text-gray-900">已訂機票與行程分流狀態</h2>
+                    <p class="text-gray-500 text-sm mt-0.5">星宇航空正式票號與預訂編號（PNR）核對完成</p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Flight Go Card -->
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-teal-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-teal-100 text-teal-800 text-xs font-bold px-3 py-1 rounded-full">去程航班 · 4人全齊</span>
+                            <span class="text-gray-400 text-xs font-bold tracking-wider">STARLUX Airlines</span>
+                        </div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="text-center bg-teal-50 px-4 py-2 rounded-2xl">
+                                <span class="block text-2xl font-black text-teal-700">7/1</span>
+                                <span class="text-xs text-teal-600 font-bold">星期三</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-gray-900">星宇航空 JX233</h4>
+                                <p class="text-sm text-gray-500">台北桃園 (TPE) ✈ 香港 (HKG)</p>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-black text-gray-800 mb-4">08:00 <span class="text-sm font-normal text-gray-400">T1</span> → 09:55 <span class="text-sm font-normal text-gray-400">T1</span></div>
+                        
+                        <div class="border-t border-gray-100 pt-4">
+                            <h5 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">乘客與票號資料</h5>
+                            <div class="space-y-2 text-sm text-gray-700">
+                                <div class="flex justify-between items-center">
+                                    <span>👴 <b>Wang Yusheng</b> (爺爺)</span>
+                                    <span class="font-mono text-xs bg-gray-50 px-2 py-1 rounded border border-gray-100">189-2105902749</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>👨 <b>Wang Kuochu</b> (Mac)</span>
+                                    <span class="font-mono text-xs bg-gray-50 px-2 py-1 rounded border border-gray-100">189-2105902744</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>👦 <b>Wang Zihhuai</b> (Lucas)</span>
+                                    <span class="font-mono text-xs bg-gray-50 px-2 py-1 rounded border border-gray-100">189-2105902745</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>👦 <b>Wang Zihchun</b> (Riley)</span>
+                                    <span class="font-mono text-xs bg-gray-50 px-2 py-1 rounded border border-gray-100">189-2105902746</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 border-t border-gray-100 pt-4">
+                        <div class="text-xs bg-teal-50 text-teal-800 p-3 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span>預訂編號：<strong class="font-mono text-sm font-black">F7T3EO</strong> (三人) / <strong class="font-mono text-sm font-black">F7V82P</strong> (爺爺)</span>
+                            <span class="font-bold bg-teal-200/50 px-2 py-0.5 rounded text-[10px]">經濟艙 S (1PC 23kg)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flight Return Card -->
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-sky-100 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full">回程航班 · 3人回台</span>
+                            <span class="text-gray-400 text-xs font-bold tracking-wider">STARLUX Airlines</span>
+                        </div>
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="text-center bg-sky-50 px-4 py-2 rounded-2xl">
+                                <span class="block text-2xl font-black text-sky-700">7/4</span>
+                                <span class="text-xs text-sky-600 font-bold">星期六</span>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-gray-900">星宇航空 JX236</h4>
+                                <p class="text-sm text-gray-500">香港 (HKG) ✈ 台北桃園 (TPE)</p>
+                            </div>
+                        </div>
+                        <div class="text-2xl font-black text-gray-800 mb-4">20:10 <span class="text-sm font-normal text-gray-400">T1</span> → 22:10 <span class="text-sm font-normal text-gray-400">T1</span></div>
+                        
+                        <div class="border-t border-gray-100 pt-4">
+                            <h5 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">乘客與票號資料</h5>
+                            <div class="space-y-2 text-sm text-gray-700">
+                                <div class="flex justify-between items-center">
+                                    <span>👨 <b>Wang Kuochu</b> (Mac)</span>
+                                    <span class="font-mono text-xs bg-gray-50 px-2 py-1 rounded border border-gray-100">189-2105902744</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>👦 <b>Wang Zihhuai</b> (Lucas)</span>
+                                    <span class="font-mono text-xs bg-gray-50 px-2 py-1 rounded border border-gray-100">189-2105902745</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span>👦 <b>Wang Zihchun</b> (Riley)</span>
+                                    <span class="font-mono text-xs bg-gray-50 px-2 py-1 rounded border border-gray-100">189-2105902746</span>
+                                </div>
+                                <div class="flex justify-between items-center text-gray-400 italic">
+                                    <span>👴 Wang Yusheng (爺爺)</span>
+                                    <span class="text-xs bg-amber-50 text-amber-700 border border-amber-100/50 px-2 py-0.5 rounded">高鐵分流至泉州/上海 🚄</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-6 border-t border-gray-100 pt-4">
+                        <div class="text-xs bg-sky-50 text-sky-800 p-3 rounded-2xl flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+                            <span>預訂編號：<strong class="font-mono text-sm font-black">F7T3EO</strong></span>
+                            <span class="font-bold bg-sky-200/50 px-2 py-0.5 rounded text-[10px]">經濟艙 Q (1PC 23kg)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grandfather Extension Card -->
+            <div class="mt-6 bg-gradient-to-r from-amber-50 to-orange-50 p-6 rounded-3xl border border-amber-100 flex flex-col lg:flex-row lg:items-center justify-between gap-4 shadow-sm">
+                <div class="flex items-center gap-4">
+                    <span class="text-3xl">🚄</span>
+                    <div>
+                        <h4 class="font-bold text-gray-900 text-lg">爺爺的泉州與上海延伸行程 (7/4 - 7/15)</h4>
+                        <p class="text-sm text-gray-600 mt-1 leading-relaxed">7/4 深圳北站高鐵直達泉州 (大行李交由我們帶回台) ➔ 泉州探親/上海遊玩 ➔ 7/15 自上海虹橋直飛台北松山</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 self-start lg:self-center">
+                    <span class="text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200 px-3 py-2 rounded-full whitespace-nowrap shadow-sm">✈️ 7/15 SHA-TSA 華航 CI202 優先規劃中</span>
                 </div>
             </div>
         </div>
