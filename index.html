@@ -12,6 +12,12 @@
         .day-section { min-height: 100vh; padding: 100px 24px 80px; }
         .time-badge { @apply inline-block bg-teal-100 text-teal-700 px-2 py-1 rounded text-xs font-bold mr-2; }
     </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        .custom-popup .leaflet-popup-content-wrapper { border-radius: 12px; font-family: 'Noto Sans TC', sans-serif; font-size: 13px; padding: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .custom-popup .leaflet-popup-content h3 { margin: 0 0 6px 0; color: #0d9488; font-weight: 800; font-size: 14px; }
+        .custom-popup .leaflet-popup-content p { margin: 0; color: #4b5563; line-height: 1.5; }
+    </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -78,6 +84,25 @@
                     </p>
                 </div>
             </div>
+
+            <!-- Interactive Map Card (Injected exactly once) -->
+            <div class="mt-12 bg-white shadow-xl border border-gray-100 p-6 md:p-8 rounded-3xl relative z-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">🗺️</span>
+                    <div>
+                        <h3 class="text-2xl font-black text-gray-900">實時互動路線地圖</h3>
+                        <p class="text-xs text-gray-500 mt-0.5">點擊按鈕切換每日行程路線，支持縮放與查看各點詳情</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2 mb-6" id="map-controls">
+                    <button class="map-btn px-4 py-2 bg-teal-600 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-teal-100" onclick="showDayRoute(0, this)">🗺️ 全圖與住宿</button>
+                    <button class="map-btn px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold rounded-xl transition-all" onclick="showDayRoute(1, this)">🚗 D1: 海上世界</button>
+                    <button class="map-btn px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold rounded-xl transition-all" onclick="showDayRoute(2, this)">🤖 D2: 華強北/深業上城</button>
+                    <button class="map-btn px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold rounded-xl transition-all" onclick="showDayRoute(3, this)">🎡 D3: 摩天輪/鍾書閣</button>
+                    <button class="map-btn px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold rounded-xl transition-all" onclick="showDayRoute(4, this)">🚄 D4: 深圳北站/蛇口港</button>
+                </div>
+                <div id="map" class="h-[480px] w-full rounded-2xl border border-gray-100 shadow-inner relative z-10"></div>
+            </div>
         </div>
     </section>
 
@@ -87,9 +112,28 @@
             <div class="mb-8">
                 <span class="text-teal-600 font-bold tracking-widest uppercase">DAY 1 - 7/1 (三)</span>
                 <h2 class="text-5xl font-black mt-2 text-gray-900">✈️ 舒適抵達 & 科技噴泉晚餐</h2>
+                <!-- Weather Badge -->
+                <div class="mt-3 flex flex-col gap-2">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center bg-sky-50 text-sky-700 text-xs font-bold px-3 py-1 rounded-lg border border-sky-100">☀️ 多雲間晴</span>
+                        <span class="inline-flex items-center bg-orange-50 text-orange-700 text-xs font-bold px-3 py-1 rounded-lg border border-orange-100">🌡️ 27°C - 33°C (體感 35°C)</span>
+                        <span class="inline-flex items-center bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-lg border border-blue-100">💧 局地短時雷陣雨 (高濕悶熱)</span>
+                    </div>
+                    <!-- Route Map Badge -->
+                    <div class="bg-teal-50/50 text-teal-800 text-[11px] font-medium px-3 py-2 rounded-xl border border-teal-100/50 flex items-center gap-2">
+                        <span class="text-sm">🗺️</span>
+                        <span class="font-bold whitespace-nowrap">今日路線：</span>
+                        <span class="overflow-x-auto no-scrollbar whitespace-nowrap text-teal-700">基隆 ➔ ✈️ 桃機/香港 ➔ 🚗 福田口岸（酒店） ➔ 🥩 潮汕牛肉火鍋 ➔ 📱 科技旗艦店（萬象天地） ➔ ⛲ 蛇口海上世界</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 bg-gray-50/70 p-2.5 rounded-xl border border-gray-100 text-[11px] text-gray-500 leading-normal">
+                        <div><strong>🌅 早上</strong>: 多雲間晴，濕度偏高 (90%) 略感悶熱</div>
+                        <div class="border-l border-gray-200 pl-2"><strong>☀️ 下午</strong>: 氣溫達 33°C，局地偶有短時雷陣雨，悶熱感重</div>
+                        <div class="border-l border-gray-200 pl-2"><strong>🌙 晚上</strong>: 多雲，海上世界微風，28°C-30°C 適合看噴泉</div>
+                    </div>
+                </div>
             </div>
             <header class="relative h-[40vh] rounded-3xl overflow-hidden mb-10 shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?q=80&w=2070&auto=format&fit=crop" alt="Shenzhen Night" class="absolute w-full h-full object-cover">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Commercial_area_of_futian_to_east2020.jpg/1280px-Commercial_area_of_futian_to_east2020.jpg" alt="Shenzhen Futian Skyline" class="absolute w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent flex items-end p-8">
                     <p class="text-white text-xl font-medium">Shenzhen Sea World, beautiful water show</p>
                 </div>
@@ -128,9 +172,28 @@
             <div class="mb-8">
                 <span class="text-emerald-600 font-bold tracking-widest uppercase">DAY 2 - 7/2 (四)</span>
                 <h2 class="text-5xl font-black mt-2 text-gray-900">🚗 大疆無人機 & 下午分頭行動</h2>
+                <!-- Weather Badge -->
+                <div class="mt-3 flex flex-col gap-2">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center bg-sky-50 text-sky-700 text-xs font-bold px-3 py-1 rounded-lg border border-sky-100">☀️ 多雲間晴</span>
+                        <span class="inline-flex items-center bg-orange-50 text-orange-700 text-xs font-bold px-3 py-1 rounded-lg border border-orange-100">🌡️ 27°C - 33°C (體感 36°C)</span>
+                        <span class="inline-flex items-center bg-red-50 text-red-700 text-xs font-bold px-3 py-1 rounded-lg border border-red-100">⚠️ 局地偶有雷陣雨 (極強紫外線、高濕悶熱)</span>
+                    </div>
+                    <!-- Route Map Badge -->
+                    <div class="bg-emerald-50/50 text-emerald-800 text-[11px] font-medium px-3 py-2 rounded-xl border border-emerald-100/50 flex items-center gap-2">
+                        <span class="text-sm">🗺️</span>
+                        <span class="font-bold whitespace-nowrap">今日路線：</span>
+                        <span class="overflow-x-auto no-scrollbar whitespace-nowrap text-emerald-700">福田酒店 ➔ 🛸 大疆旗艦店 ➔ 🤖 無人車 ➔ 🏢 Google 辦公室（午餐） ➔ 👦 華強北 / 🧓 深業上城 ➔ 🦆 卓悅中心（炳勝品味） ➔ 🌃 市民中心燈光秀</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 bg-gray-50/70 p-2.5 rounded-xl border border-gray-100 text-[11px] text-gray-500 leading-normal">
+                        <div><strong>🌅 早上</strong>: 晴天多雲，微熱但尚乾爽，適合大疆無人機演示</div>
+                        <div class="border-l border-gray-200 pl-2"><strong class="text-red-500">☀️ 下午</strong>: 熱浪核心！體感 36°C + 極強紫外線，<b>慢活組請務必全程在深業上城室內避暑</b></div>
+                        <div class="border-l border-gray-200 pl-2"><strong>🌙 晚上</strong>: 多雲，局地偶有短時陣雨，市民中心廣場風大</div>
+                    </div>
+                </div>
             </div>
             <header class="relative h-[40vh] rounded-3xl overflow-hidden mb-10 shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=2070&auto=format&fit=crop" alt="Technology" class="absolute w-full h-full object-cover">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/0/0d/Pingan_International_Finance_Center2020.jpg" alt="Ping An Finance Centre" class="absolute w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent flex items-end p-8">
                     <p class="text-white text-xl font-medium">Huaqiangbei & Shenzhen Museum, Tech vs Relax</p>
                 </div>
@@ -142,10 +205,59 @@
                     <ul class="space-y-3 text-gray-700 text-sm">
                         <li><span class="time-badge">08:30–09:30</span> 酒店享用豪華自助早餐（孫子吃超飽）</li>
                         <li><span class="time-badge">09:30–11:30</span> 【大疆 DJI 歡樂海岸旗艦店】看無人機飛行演示，隨後全家乘坐未來的黑科技無人自動駕駛車「小馬智行 (Pony.ai)」或「蘿蔔快跑 (Baidu Apollo Go)」直奔午餐（小馬智行支援香港號碼 +852 註冊，且免身份證實名認證，車多速度快；百度蘿蔔快跑因實名嚴格，留作備用科普）。</li>
-                        <li><span class="time-badge">12:00–13:30</span> 午餐：【Google 深圳辦公室（深業上城 A 座 30F/31F）】大快朵頤高空員工午餐！Mac 直接刷員工證帶全家人上去，在 30 樓高空落地窗前一邊享用精緻且完全免費的 Google 廚藝午餐，一邊俯瞰中心公園 and 蓮花山公園的綠意美景。孫子們能朝聖爸爸上班的超酷科技辦公室，爺爺也吃得舒服、完全免去奔波排隊之苦！</li>
+                        <li><span class="time-badge">12:00–13:30</span> 午餐：【Google 深圳辦公室（深業上城 A 座 30F/31F）】大快朵頤高空員工午餐！Mac 刷員工卡帶全家上去，在落地窗前一邊享受 Google 廚藝午餐，一邊俯瞰蓮花山美景。<span class="text-teal-600 font-bold">⭐ 斯容特蒐：別忘了 31 樓是 Google Cafe，且一定要先帶 Lucas & Riley 去 30 樓收集超精美的 Google 城市印章明信片 (Stamp Postcard)，青少年絕對愛不釋手！</span></li>
                         <li><span class="time-badge">14:00–17:00</span> <strong>【下午兵分兩路（科技 vs 臨海慢活）】</strong></li>
-                        <li><span class="text-xs text-teal-600 font-bold ml-4">👦 科技組：</span><strong>深逛華強北電子街（足足3小時！）</strong>，探索晶片DIY、朝聖華強北博物館，並在「華強北 Yeah夜市」解鎖網紅黑科技——【智能炒麵機器人】（70秒翻炒出爐，大開眼界！）</li>
-                        <li><span class="text-xs text-emerald-600 font-bold ml-4">🧓 慢活組：</span><strong>【深業上城空中花園步道與福田中心公園】</strong>走在無障礙的空中花園步道，長輩輕鬆散步不傷膝蓋、年輕人拍建築美照。接著在公園實測「美團無人機空投外賣」黑科技，長輩坐著喝茶，青少年盯著天空看下午茶在10分鐘內降落送達！同時順路朝聖「深業上城小米之家全球旗艦店」，帶 Lucas & Riley 實車試坐 2026 最熱門科幻的【小米 SU7 / SU7 Ultra 智慧電動車】，摸摸未來科技！<strong>【順路美食推薦】</strong>：直接去商場內的<strong>【盒馬鮮生】</strong>，看天花板傳送帶飛馳，親自挑選活蹦亂跳的龍蝦或大蝦現撈現煮，熱騰騰軟嫩鮮美，對爺爺牙口和胃口都是 100 分的奢華下午茶點心！</li>
+                        <li><span class="text-xs text-teal-600 font-bold ml-4">👦 科技組：</span><strong>【華強北極客尋寶之行（3小時黃金動線）】</strong><br>
+                        <span class="text-teal-600 text-xs font-semibold">🗺️ 最佳順序（由北至南完美步行，全程室內冷氣避暑，終點直達晚餐會合點）：</span>
+                        <div class="mt-3 bg-teal-50/30 border border-teal-100/50 p-4 rounded-2xl space-y-4 text-xs">
+                            <div class="flex gap-3">
+                                <span class="bg-teal-600 text-white w-5 h-5 rounded-full flex items-center justify-center font-bold shrink-0 mt-0.5">1</span>
+                                <div>
+                                    <strong class="text-teal-900">14:00-14:40 【時空朝聖】華強北博物館</strong>
+                                    <p class="text-gray-500 mt-1">地點：現代之窗商業廣場 5 樓。從華強北地鐵站出來先入館，全息投影、霓虹燈光隧道、BB Call與大哥大歷史牆，拍照打卡巨科幻！</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 border-t border-teal-100/30 pt-3">
+                                <span class="bg-teal-600 text-white w-5 h-5 rounded-full flex items-center justify-center font-bold shrink-0 mt-0.5">2</span>
+                                <div>
+                                    <strong class="text-teal-900">14:40-15:00 【奇葩小玩】遠望數碼商城 1 樓</strong>
+                                    <p class="text-gray-500 mt-1">朝南步行 3 分鐘。批發各類好玩古怪的電子玩具、智慧生活硬體、黑科技掛脖空調，給 Riley 抓些新奇玩具。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 border-t border-teal-100/30 pt-3">
+                                <span class="bg-teal-600 text-white w-5 h-5 rounded-full flex items-center justify-center font-bold shrink-0 mt-0.5">3</span>
+                                <div>
+                                    <strong class="text-teal-900">15:00-15:40 【懷舊掌機 ＋ 鍵盤DIY】華強電子世界二店 2F-3F</strong>
+                                    <p class="text-gray-500 mt-1">朝南步行 2 分鐘。必去 2F「ZH電玩工廠店」，現場試玩開源掌機與復古模擬器掌機（安伯尼克/Miyoo）；3F 則是客製化鍵盤天堂，買齊各種鍵帽、磁軸、鋁合金套件，現場拼裝大男孩玩具！</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 border-t border-teal-100/30 pt-3">
+                                <span class="bg-teal-600 text-white w-5 h-5 rounded-full flex items-center justify-center font-bold shrink-0 mt-0.5">4</span>
+                                <div>
+                                    <strong class="text-teal-900">15:40-16:15 【創客軍火庫】都會電子城 2F-3F</strong>
+                                    <p class="text-gray-500 mt-1">緊鄰電子世界。滿層的 Arduino、樹莓派開發板、感測器和烙鐵組件。如果兒子們平時玩程式或機器人，這裡就是他們的尋寶庫！</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 border-t border-teal-100/30 pt-3">
+                                <span class="bg-teal-600 text-white w-5 h-5 rounded-full flex items-center justify-center font-bold shrink-0 mt-0.5">5</span>
+                                <div>
+                                    <strong class="text-teal-900">16:15-16:45 【硬體怪獸】賽格廣場 1F-4F</strong>
+                                    <p class="text-gray-500 mt-1">朝南步行 1 分鐘。朝聖華強北地標摩天大樓！整層五彩斑斕的頂配電競裝機、透明液態水冷 MOD 主機，絕對讓男孩子熱血沸騰。</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 border-t border-teal-100/30 pt-3">
+                                <span class="bg-teal-600 text-white w-5 h-5 rounded-full flex items-center justify-center font-bold shrink-0 mt-0.5">6</span>
+                                <div>
+                                    <strong class="text-teal-900">16:45-17:15 【手機解剖】通天地通訊市場</strong>
+                                    <p class="text-gray-500 mt-1">朝東南步行 3 分鐘。看檔口小哥 5 分鐘現場神速維修、改裝「蘋果手機透明探索版」背蓋。結束後在此叫滴滴 10 分鐘（2.5公里）前往卓悅中心與長輩合體享用晚餐！</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                        <li><span class="text-xs text-emerald-600 font-bold ml-4">🧓 慢活組：</span><strong>【深業上城避暑 & 16:15 中心公園無人機空投】</strong><br>
+                        <span class="text-red-500 font-bold">🚨 斯容高溫警告：14:00-16:00 體感逼近 36°C，紫外線極強！嚴禁帶爺爺戶外曝曬。</span><br>
+                        - <strong>14:00-16:15 (避暑)</strong>：留在深業上城商場室內吹冷氣，朝聖小米之家旗艦店摸【小米 SU7 / SU7 Ultra 智慧電動車】、在有冷氣的咖啡廳小憩，或逛【盒馬鮮生】現場現撈波士頓龍蝦、大蝦等現煮無骨下午茶，對爺爺牙口 100 分友善！<br>
+                        - <strong>16:15-17:00 (慢步)</strong>：陽光減弱後再步入隔壁的【福田中心公園】綠意慢步，實測<strong>「美團無人機空投下午茶」</strong>，看無人機 10 分鐘精準降落，老少皆大開眼界！</li>
                         <li><span class="time-badge">18:00–20:00</span> 晚餐【炳勝品味】會合（粵菜經典，脆皮燒鵝必點）</li>
                         <li><span class="time-badge">20:15–21:00</span> 【市民中心廣場】散步近距離看 CBD 大樓群都市燈光秀</li>
                     </ul>
@@ -154,7 +266,7 @@
                     <span class="text-5xl mb-4">🚁🦖🧓</span>
                     <h4 class="text-xl font-bold text-emerald-800 mb-2">斯容兵分兩路祕技</h4>
                     <p class="text-gray-700 text-sm leading-relaxed mb-2">
-                        下午各自精彩！全家中午先乘坐科幻的「小馬智行」無人自動駕駛車體驗未來出行直奔福田深業上城的 Google 深圳辦公室享受超酷的高空員工午餐；下午科技組去華強北深度探索 3 小時，傍晚解鎖 70 秒翻炒出爐的【智能炒麵機器人】；爺爺則在「深業上城空中花園」悠閒散步，最酷的是體驗美團無人機空投下午茶，並順道去深業上城摸摸最新震撼的【小米 SU7 / SU7 Ultra 智慧電動車】，再去盒馬鮮生看頭頂傳送帶飛舞、享受現撈代客烹飪的高科技海鮮點心，好玩不累。傍晚在福田會合。
+                        下午高溫避暑大作戰！由於 2026 盛夏 early-July 深圳下午熱浪逼人（體感 36°C），下午 14:00 - 16:00 慢活組必須<b>全程待在深業上城室內吹冷氣</b>。在小米旗艦店摸最新 SU7 Ultra 智慧電動車，並在盒麻鮮生吃無骨海鮮下午茶。等 16:15 陽光減弱，再出門在中心公園實測「美團無人機空投下午茶」黑科技，既安全、高科技又不傷長輩膝蓋。
                     </p>
                     <p class="text-gray-700 text-sm">
                         晚餐後的市民中心廣場燈光秀（20:15 開演），剛好就在市民中心，看完後直接用「滴滴出行」叫一台 6 人座商務車，10 分鐘輕鬆回到溫馨的季語酒店，爺爺完全不用走路！
@@ -170,9 +282,28 @@
             <div class="mb-8">
                 <span class="text-sky-600 font-bold tracking-widest uppercase">DAY 3 - 7/3 (五)</span>
                 <h2 class="text-5xl font-black mt-2 text-gray-900">🏞️ 深圳人才公園海景慢步 & 頂級老字號粵點</h2>
+                <!-- Weather Badge -->
+                <div class="mt-3 flex flex-col gap-2">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center bg-sky-50 text-sky-700 text-xs font-bold px-3 py-1 rounded-lg border border-sky-100">☀️ 多雲間晴</span>
+                        <span class="inline-flex items-center bg-orange-50 text-orange-700 text-xs font-bold px-3 py-1 rounded-lg border border-orange-100">🌡️ 27°C - 33°C (體感 35°C)</span>
+                        <span class="inline-flex items-center bg-red-50 text-red-700 text-xs font-bold px-3 py-1 rounded-lg border border-red-100">⚠️ 局部有雷陣雨 (極強紫外線、高濕悶熱)</span>
+                    </div>
+                    <!-- Route Map Badge -->
+                    <div class="bg-sky-50/50 text-sky-800 text-[11px] font-medium px-3 py-2 rounded-xl border border-sky-100/50 flex items-center gap-2">
+                        <span class="text-sm">🗺️</span>
+                        <span class="font-bold whitespace-nowrap">今日路線：</span>
+                        <span class="overflow-x-auto no-scrollbar whitespace-nowrap text-sky-700">福田酒店 ➔ ☁️ MOCAPE 藝文館 ➔ 🦆 大董烤鴨 ➔ ☕ 萬象城小憩 ➔ 🎡 灣區之光摩天輪/鍾書閣 ➔ 🥟 蘩樓 ➔ 🍢 水圍夜市</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 bg-gray-50/70 p-2.5 rounded-xl border border-gray-100 text-[11px] text-gray-500 leading-normal">
+                        <div><strong>🌅 早上</strong>: 晴朗好天氣，適合 MOCAPE 藝術館室內吹冷氣大沙發觀景</div>
+                        <div class="border-l border-gray-200 pl-2"><strong class="text-orange-500">☀️ 下午</strong>: 紫外線最高峰！<b>下午三點前嚴禁去深圳灣公園海岸長廊曝曬</b>，改留在萬象城室內享用下午茶</div>
+                        <div class="border-l border-gray-200 pl-2"><strong>🌙 晚上</strong>: 多雲，溫和海風 (29°C)，極度適合蘩樓點心與水圍街區夜市散步</div>
+                    </div>
+                </div>
             </div>
             <header class="relative h-[40vh] rounded-3xl overflow-hidden mb-10 shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop" alt="Shenzhen Talent Park" class="absolute w-full h-full object-cover">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/20201112_The_skyline_at_Shenzhen_Bay.jpg" alt="Shenzhen Bay Skyline" class="absolute w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent flex items-end p-8">
                     <p class="text-white text-xl font-medium">Shenzhen Talent Park & Fan Lou Cantonese Dim Sum</p>
                 </div>
@@ -185,7 +316,9 @@
                         <li><span class="time-badge">08:30–10:00</span> 讓爺爺睡飽，在季語酒店享用自助早餐</li>
                         <li><span class="time-badge">10:00–12:00</span> 【深圳市當代藝術與城市規劃館 (MOCAPE)】（地鐵少年宮站A2出口，市民中心北側）。這是一座設計感爆棚的科幻銀色巨雲建築，也是深圳最頂級的藝文新地標！常設展「城市規劃館」完全免費（持台胞證掃碼預約即可），裡面有令人震撼的裸眼 3D、巨幅互動螢幕與超大深圳全景沙盤模型，Lucas & Riley 絕對會看呆。最讚的是，這裡有整面通透的巨型玻璃幕牆與高空天橋大沙發區，全家人可以坐在這裡舒舒服服吹強冷氣、享受天際線「下午茶體驗」！對爺爺體力與你的荷包都是完美極致的神級景點。</li>
                         <li><span class="time-badge">12:00–13:30</span> 午餐：【大董烤鴨（深圳灣萬象城店）】（4樓，L428-L430）享用殿堂級的「酥不膩」烤鴨與精緻意境菜！大董烤鴨鴨皮酥脆、入口即化蘸糖吃，鴨肉鮮嫩無骨，對爺爺的牙口 100 分友善。中國意境菜裝潢極其大氣優雅，帶全家來吃排場與儀式感直接拉滿！</li>
-                        <li><span class="time-badge">13:30–15:00</span> 【深圳灣公園海風長廊】或在【深圳灣萬象城】高級咖啡廳悠閒小憩（就在萬象城旁邊，吹著溫和海風，爺爺坐在長椅上看海、看海鷗，Lucas & Riley 也能在綠地散步，完全省去奔波，路線極度順路！）</li>
+                        <li><span class="time-badge">13:30–15:00</span> <strong>【深圳灣萬象城 (MixC) 室內避暑中】</strong><br>
+                        <span class="text-red-500 font-bold">🚨 斯容曝曬警告：深圳灣海風長廊完全無遮蔽，兩點曝曬直接曬乾！</span><br>
+                        此時段為紫外線指數最高峰。全家大口吃完大董烤鴨後，<strong>下午三點前嚴禁去海風長廊曬太陽</strong>。改留在豪華無比的【深圳灣萬象城 (MixC)】，在室內冷氣房享用精品下午茶（如 %Arabica 或精緻茶沙龍），既精緻放鬆又防曬。</li>
                         <li><span class="time-badge">15:00–18:00</span> <strong>【歡樂港灣：灣區之光摩天輪 ＋ 鍾書閣】</strong>帶爺爺搭乘一圈 30 分鐘的巨型摩天輪，冷氣強勁且不費力地飽覽前海灣絕美高空景觀；結束後步行至旁邊商區，帶青少年朝聖全紅螺旋書架的網紅科技感書店<strong>「鍾書閣」</strong>，老少皆大歡喜！</li>
                         <li><span class="time-badge">18:00–18:30</span> 滴滴商務車先回酒店，讓爺爺回房休息放行李</li>
                         <li><span class="time-badge">18:30–20:30</span> 晚餐：步行 3 分鐘至酒店隔壁老字號【蘩樓（水圍店）】享用純手工粵式點心，品茗聊天</li>
@@ -196,7 +329,7 @@
                     <span class="text-5xl mb-4">🏞️🥟🍵</span>
                     <h4 class="text-xl font-bold text-sky-800 mb-2">深圳灣畔的最美科技景觀</h4>
                     <p class="text-gray-700 text-sm leading-relaxed mb-2">
-                        上午先去充滿科幻感的 MOCAPE 館吹超強冷氣、免錢坐在高空天橋大沙發看巨幅 3D 城市沙盤與絕美福田高空摩天大樓群景觀（免費高空下午茶替代神技！）；下午轉戰「歡樂港灣」，搭乘無障礙的「灣區之光」摩天輪，讓爺爺免走路就能享受奢華高空景觀；Lucas 和 Riley 則去旁邊商區朝聖螺旋紅色書架的「鍾書閣」，視覺震撼又充滿科技感。全家一起吹著冷氣，看日落夕陽與高科技城市完美融合。
+                        上午先去充滿科幻感的 MOCAPE 館吹超強冷氣、免費坐在高空天橋大沙發看 3D 城市沙盤與絕美福田天際線；吃完大董烤鴨後下午兩點，<b>高溫與紫外線達到最頂峰</b>，嚴禁去毫無遮掩的深圳灣長廊曬太陽！全家先留在深圳灣萬象城吹冷氣喝精品下午茶，15:00 以後再去搭冷氣超強的「灣區之光」摩天輪，接著逛室內的「鍾書閣」。全程無痛隔離紫外線，舒適度 100 分。
                     </p>
                     <p class="text-gray-700 text-sm">
                         晚上吃老字號蘩樓（水圍店），就在酒店隔壁極其順路！手工現點現做。點一壺鐵觀音、配上露筍蝦餃皇、流沙包、紅米腸，這是最正宗優雅的廣東茶樓氛圍。吃飽出門就是超火爆的水圍夜市，直接擼串！
@@ -212,9 +345,28 @@
             <div class="mb-8">
                 <span class="text-teal-600 font-bold tracking-widest uppercase">DAY 4 - 7/4 (六)</span>
                 <h2 class="text-5xl font-black mt-2 text-gray-900">🏛️ 古色古香南頭古城 & 護送爺爺優雅啟程</h2>
+                <!-- Weather Badge -->
+                <div class="mt-3 flex flex-col gap-2">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="inline-flex items-center bg-indigo-50 text-indigo-700 text-xs font-bold px-3 py-1 rounded-lg border border-indigo-100">☁️ 多雲有雨</span>
+                        <span class="inline-flex items-center bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-lg border border-blue-100">⛈️ 有雷陣雨 (高濕多雨)</span>
+                        <span class="inline-flex items-center bg-teal-50 text-teal-700 text-xs font-bold px-3 py-1 rounded-lg border border-teal-100">🌡️ 26°C - 31°C</span>
+                    </div>
+                    <!-- Route Map Badge -->
+                    <div class="bg-indigo-50/50 text-indigo-800 text-[11px] font-medium px-3 py-2 rounded-xl border border-indigo-100/50 flex items-center gap-2">
+                        <span class="text-sm">🗺️</span>
+                        <span class="font-bold whitespace-nowrap">今日路線：</span>
+                        <span class="overflow-x-auto no-scrollbar whitespace-nowrap text-indigo-700">福田酒店 ➔ 🛍️ 卓悅 INTOWN ➔ 🛸 飛碟 / 🍲 豬肚雞 ➔ 🚄 深圳北站 (送爺爺) ➔ 👦 古城 / 🤖 C Future City ➔ 🚢 蛇口港 ➔ ✈️ 香港 ➔ 台北</span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 bg-gray-50/70 p-2.5 rounded-xl border border-gray-100 text-[11px] text-gray-500 leading-normal">
+                        <div><strong>🌅 早上</strong>: 多雲有陰，偶有短時陣雨 (28°C)，室內打包退房與卓悅 INTOWN 伴手禮購買</div>
+                        <div class="border-l border-gray-200 pl-2"><strong class="text-blue-500">☀️ 下午</strong>: 雷陣雨機率大增 (80%)，<b>若下大雨請立刻啟動「中洲灣 C Future City」極客避雨替代方案</b></div>
+                        <div class="border-l border-gray-200 pl-2"><strong>🌙 晚上</strong>: 雨後多雲轉陰，氣溫微降，蛇口碼頭快輪行李直掛，兩手空空優雅退稅</div>
+                    </div>
+                </div>
             </div>
             <header class="relative h-[40vh] rounded-3xl overflow-hidden mb-10 shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1540959733332-eab4deceeaf7?q=80&w=2070&auto=format&fit=crop" alt="High-Rise City" class="absolute w-full h-full object-cover">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/20241207_Aerial_view_of_Shenzhen_Bao%27an_International_Airport.jpg/1280px-20241207_Aerial_view_of_Shenzhen_Bao%27an_International_Airport.jpg" alt="Shenzhen Departure" class="absolute w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent flex items-end p-8">
                     <p class="text-white text-xl font-medium">Grandpa Departure & Nantou Ancient Town Walk</p>
                 </div>
@@ -233,10 +385,10 @@
                         <li><span class="time-badge">13:30–14:00</span> 採購「鮑師傅糕點」與手標茶禮等最後伴手禮，全程平坦無障礙，極度冷氣避暑</li>
                         <li><span class="time-badge">14:00–14:30</span> 行李直接上 Didi Premium 6 人座商務車，直奔深圳北站（僅需 15 分鐘），護送爺爺進入商務座候車室，免去排隊之苦（高鐵約15:00發車）</li>
                         <li><span class="time-badge">14:30–15:00</span> <strong>【護送爺爺啟程】</strong>順利送爺爺搭乘高鐵直達福建泉州</li>
-                        <li class="pl-4 text-xs text-gray-500 border-l border-teal-200">🚗 **交通（科技組出發）**：送完爺爺後，科技組 3 人搭乘「滴滴」走北環大道直奔南山區【南頭古城】，車程約 22 分鐘（18 公里）。</li>
-                        <li><span class="time-badge">15:00–16:00</span> 科技組（3人）乘 Didi 快速道路直奔南山<strong>【南頭古城】</strong>，沿平緩石板路漫步文創老街</li>
-                        <li class="pl-4 text-xs text-gray-500 border-l border-teal-200">🚙 **交通**：古城漫步結束後，叫滴滴約 15 分鐘（10 公里）直奔蛇口老街吃糖水，隨後叫滴滴 5 分鐘直達【蛇口郵輪母港】辦理聯程登機。</li>
-                        <li><span class="time-badge">16:00–16:45</span> 逛古城文創店，順道在<strong>【蛇口老街】</strong>享用黃師傅糖水、百草堂等老字號地道點心，最後直達【蛇口郵輪母港】</li>
+                        <li class="pl-4 text-xs text-gray-500 border-l border-teal-200">🚗 **🌧️ 斯容暴雨備案（科技組下午二選一）**：7/4 雷陣雨機率極高，南頭古城與老街全為戶外石板路，大雨天行進將極度狼狽。</li>
+                        <li><span class="time-badge">15:00–16:45</span> <strong>【晴天：南頭古城文創漫步】</strong> 或 <strong>【🌧️ 雨天備案：中洲灣 C Future City（常設 teamLab ＋ 蔦屋書店 ＋ KP-FUN 潮玩街區）】</strong><br>
+                        - <strong>晴天方案</strong>：科技組 3 人搭滴滴漫步【南頭古城】、逛文創小店，隨後去【蛇口老街】享用老字號點心。<br>
+                        - <strong>🌧️ 雨天方案（高科技避雨推薦）</strong>：直接去福田【中洲灣 C Future City】，朝聖華南首家絕美「蔦屋書店」、在 KP-FUN 室內潮玩遊樂街區玩 MR 卡丁車 / 體感 VR（或觀看 teamLab 大型光影互動展），全程冷氣，傍晚再優雅叫滴滴直達蛇口碼頭！</li>
                         <li><span class="time-badge">16:45–17:15</span> 碼頭 2 樓辦理聯程登機，<strong>星宇航空行李直掛台北！兩手空空</strong></li>
                         <li class="pl-4 text-xs text-gray-500 border-l border-teal-200">🚢 **交通**：搭乘 17:30 快輪，30 分鐘舒適航程直達香港國際機場管制區（免入境香港手續，全家無負擔）。</li>
                         <li><span class="time-badge">17:30–18:00</span> 搭乘 17:30 班次快輪（30分鐘航程）直達香港機場管制區</li>
@@ -248,7 +400,7 @@
                     <span class="text-5xl mb-4">🚢💰🎒</span>
                     <h4 class="text-xl font-bold text-teal-800 mb-2">斯容神級通關與分流祕技</h4>
                     <p class="text-gray-700 text-sm leading-relaxed mb-2">
-                        最後一天行程完美閉環！上午先去近在咫尺的福田 CBD 頂級商場大快朵頤並採購「鮑師傅」等伴手禮，隨後從容用 Didi 送爺爺前往深圳北站搭高鐵，車程僅 15 分鐘極其輕鬆。送完爺爺後，科技組快速移動到南頭古城與蛇口老街，悠閒看街景、吃地道小點，最後才到蛇口碼頭。
+                        最後一天下午雷陣雨風險極高，若下大雨，科技組 3 人直接捨棄全戶外的南頭古城和蛇口老街，啟動<b>【斯容暴雨避難計畫】</b>：改去福田的中洲灣 C Future City，朝聖「蔦屋書店」、玩極客感十足的 KP-FUN 室內 MR 賽車與 VR 遊戲，甚至可以看 teamLab 常設展。完全在室內一站式避雨體驗未來科技，不濕鞋更爽玩，傍晚再從容前往蛇口郵輪母港返台！
                     </p>
                     <p class="text-gray-700 text-sm">
                         在蛇口碼頭把行李交給星宇直掛，你們 3 人兩手空空，搭 30 分鐘快輪直達香港機場，當場領取 360 港幣現金退稅，優雅到不行！對全家體力是完美的保護。
@@ -396,6 +548,148 @@
             document.getElementById('navbar').style.transform = curr > lastScroll && curr > 200 ? 'translateY(-100%)' : 'translateY(0)';
             lastScroll = curr;
         });
+    </script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Initialize Map exactly once
+        var map = L.map('map', { scrollWheelZoom: false }).setView([22.5350, 114.0000], 12);
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Custom Leaflet Icons
+        function getMarkerIcon(color) {
+            return L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-' + color + '.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+        }
+
+        var hotelIcon = getMarkerIcon('red');
+        var techIcon = getMarkerIcon('blue');
+        var foodIcon = getMarkerIcon('orange');
+        var transportIcon = getMarkerIcon('green');
+
+        // Spots Definitions
+        var spots = [
+            // Hotel & Food (Red & Orange)
+            { id: 'hotel', name: "福田口岸季語酒店", coords: [22.5202, 114.0620], icon: hotelIcon, desc: "<h3>🏨 福田口岸季語酒店</h3><p>三代同堂大本營，地處福田口岸。高CP值輕奢、配備智控客房與極好睡床墊，全家安心休息！</p>" },
+            { id: 'fanlou', name: "蘩樓（水圍店）", coords: [22.5205, 114.0632], icon: foodIcon, desc: "<h3>🥟 蘩樓（水圍店）</h3><p>就在酒店隔壁！百年老字號純手工廣式點心，現點現做，流沙包、蝦餃皇必吃。</p>" },
+            { id: 'shuiwei', name: "水圍 1368 街區 / 水圍夜市", coords: [22.5215, 114.0610], icon: foodIcon, desc: "<h3>🍢 水圍 1368 街區 / 水圍夜市</h3><p>步行 3 分鐘即達，深圳最火爆城中村夜市，大排檔擼串、雙皮奶，體驗極致煙火氣。</p>" },
+            
+            // D1 Spots (Blue)
+            { id: 'd1_mixc', name: "萬象天地 (MixC World)", coords: [22.5410, 113.9550], icon: techIcon, desc: "<h3>🛍️ 萬象天地 (MixC World)</h3><p>Day 1 下午。朝聖華為、小米全球旗艦店，看折疊機與智慧電動車。午餐在此享用極嫩【大目牛肉火鍋】。</p>" },
+            { id: 'd1_seaworld', name: "蛇口海上世界 (Sea World)", coords: [22.4820, 113.9140], icon: techIcon, desc: "<h3>⛲ 蛇口海上世界</h3><p>Day 1 傍晚。在最火爆【悅得閒】邊吹冷氣喝茶、吃蝦餃，邊看 19:00 / 20:00 的巨大海上音樂噴泉秀！</p>" },
+
+            // D2 Spots (Blue)
+            { id: 'd2_dji', name: "大疆 DJI 歡樂海岸旗艦店", coords: [22.5250, 113.9920], icon: techIcon, desc: "<h3>🚁 大疆 DJI 歡樂海岸旗艦店</h3>Day 2 早上。看最新無人機飛行演示。隨後全家乘坐「小馬智行」L4級全無人駕駛車去吃午餐！" },
+            { name: "Google 深圳辦公室 (深業上城)", coords: [22.5600, 114.0690], icon: techIcon, desc: "<h3>🏢 Google 深圳辦公室</h3>Day 2 中午。在 A 座 30F/31F 俯瞰中心公園無敵天際線、享用廚藝員工午餐，記得 30F 收明信片、31F 喝咖啡！" },
+            { id: 'd2_hqb', name: "華強北電子街", coords: [22.5440, 114.0860], icon: techIcon, desc: "<h3>💻 華強北電子街</h3><p>Day 2 下午（科技組）。深入晶片DIY、華強北博物館，朝聖賽格大廈，晚上在夜市解鎖 70 秒翻炒智能炒麵機器人！</p>" },
+            { id: 'd2_park', name: "中心公園", coords: [22.5450, 114.0750], icon: techIcon, desc: "<h3>🌲 深圳中心公園</h3><p>Day 2 下午（慢活組）。16:15 降溫後，陪爺爺綠意慢步，實測美團無人機空投奈雪下午茶！</p>" },
+            { id: 'd2_bingsheng', name: "美團無人機空投/深業上城", coords: [22.5360, 114.0550], icon: foodIcon, desc: "<h3>🦆 炳勝品味（卓悅中心店）</h3><p>Day 2 晚餐。粵菜老字號精緻粵菜（脆皮燒鵝、黑叉燒極頂！），裝潢奢華大氣、聚餐首選。</p>" },
+            { id: 'd2_lightshow', name: "市民中心廣場 (燈光秀)", coords: [22.5453, 114.0588], icon: techIcon, desc: "<h3>🌃 市民中心廣場燈光秀</h3><p>Day 2 晚上 20:15。近距離震撼觀賞福田 CBD 摩天大樓群燈光秀，散步散心首選。</p>" },
+
+            // D3 Spots (Blue)
+            { id: 'd3_mocape', name: "當代藝術與城市規劃館 (MOCAPE)", coords: [22.5492, 114.0592], icon: techIcon, desc: "<h3>🏛️ 深圳市當代藝術與城市規劃館</h3><p>Day 3 早上。免費看 3D 裸眼大沙盤與城市規劃全景，坐在高空天橋大沙發免費看福田摩天大樓景緻（完美平替高空茶座）。</p>" },
+            { id: 'd3_mixc', name: "深圳灣萬象城 / 大董烤鴨", coords: [22.5110, 113.9500], icon: techIcon, desc: "<h3>🦆 大董烤鴨（深圳灣萬象城店）</h3><p>Day 3 午餐。享用殿堂級「酥不膩」烤鴨與意境菜，極其軟嫩對爺爺好。下午留在此處喝精品茶，防曬躲烈日！</p>" },
+            { id: 'd3_glory', name: "歡樂港灣 / 灣區之光摩天輪 / 鍾書閣", coords: [22.5530, 113.8860], icon: techIcon, desc: "<h3>🎡 歡樂港灣／灣區之光摩天輪 / 鍾書閣</h3><p>Day 3 下午。搭乘 128 米高、冷氣強勁的「灣區之光」摩天輪看海景；隨後青少年朝聖螺旋紅書架的「鍾書閣」！</p>" },
+
+            // D4 Spots (Blue & Green)
+            { id: 'd4_intown', name: "卓悅 INTOWN / COCO Park", coords: [22.5330, 114.0610], icon: foodIcon, desc: "<h3>🛍️ 卓悅 INTOWN & COCO Park</h3><p>Day 4 早上。採購鮑師傅糕點與手標茶。午餐吃 Orbit One 磁懸浮飛碟傳菜 / 順德公胡椒豬肚雞。</p>" },
+            { id: 'd4_north', name: "深圳北站 (高鐵)", coords: [22.6120, 114.0290], icon: transportIcon, desc: "<h3>🚄 深圳北站 (高鐵)</h3><p>Day 4 下午。送爺爺搭乘高鐵商務座直達泉州站（尊享 VIP 候車室，爺爺超輕鬆！）。</p>" },
+            { id: 'd4_cfuture', name: "中洲灣 C Future City", coords: [22.5230, 114.0250], icon: techIcon, desc: "<h3>🤖 中洲灣 C Future City（雨天最頂備案）</h3><p>Day 4 下午（雨天）。科技組 3 人去朝聖蔦屋書店、在 KP-FUN 玩室內 MR 賽車/VR 電玩，或看常設 teamLab 光影互動展，酷炫防雨！</p>" },
+            { id: 'd4_port', name: "蛇口郵輪母港", coords: [22.4690, 113.9000], icon: transportIcon, desc: "<h3>🚢 蛇口郵輪母港</h3><p>Day 4 下午。辦理聯程登機，星宇航空行李直掛台北！兩手空空，領取 120 港幣退稅，搭快輪直達香港機場返台。</p>" }
+        ];
+
+        // Add Markers to Map
+        var markerLayers = L.layerGroup().addTo(map);
+        spots.forEach(function(s) {
+            L.marker(s.coords, { icon: s.icon })
+                .addTo(markerLayers)
+                .bindPopup(s.desc, { className: 'custom-popup' });
+        });
+
+        // Define Day-by-Day Polyline Routes
+        var hotel_coord = [22.5202, 114.0620];
+
+        var routeCoords = {
+            1: [
+                hotel_coord,
+                [22.5410, 113.9550], // D1 MixC
+                [22.4820, 113.9140], // D1 Seaworld
+                hotel_coord
+            ],
+            2: [
+                hotel_coord,
+                [22.5250, 113.9920], // D2 DJI
+                [22.5600, 114.0690], // D2 Google / UpperHills
+                [22.5440, 114.0860], // D2 HQB
+                [22.5360, 114.0550], // D2 Bingsheng / One Avenue
+                [22.5453, 114.0588], // D2 Lightshow
+                hotel_coord
+            ],
+            3: [
+                hotel_coord,
+                [22.5492, 114.0592], // D3 MOCAPE
+                [22.5110, 113.9500], // D3 MixC / Dadong
+                [22.5530, 113.8860], // D3 Glory / Wheel
+                hotel_coord
+            ],
+            4: [
+                hotel_coord,
+                [22.5330, 114.0610], // D4 Intown
+                [22.6120, 114.0290], // D4 North Station
+                [22.5230, 114.0250], // D4 C Future City (Rain backup)
+                [22.4690, 113.9000]  // D4 Port
+            ]
+        };
+
+        var routeColors = {
+            1: '#0d9488', // Teal
+            2: '#10b981', // Emerald
+            3: '#0284c7', // Sky Blue
+            4: '#6366f1'  // Indigo
+        };
+
+        var routeLayers = {};
+        
+        for (var day in routeCoords) {
+            routeLayers[day] = L.polyline(routeCoords[day], {
+                color: routeColors[day],
+                weight: 4,
+                opacity: 0.8,
+                dashArray: '8, 8',
+                lineJoin: 'round'
+            });
+        }
+
+        // Show Day Route Function
+        function showDayRoute(day, btnElement) {
+            var btns = document.querySelectorAll('.map-btn');
+            btns.forEach(function(b) {
+                b.className = "map-btn px-4 py-2 bg-gray-100 text-gray-700 hover:bg-gray-200 text-xs font-bold rounded-xl transition-all";
+            });
+            if (btnElement) {
+                btnElement.className = "map-btn px-4 py-2 bg-teal-600 text-white text-xs font-bold rounded-xl transition-all shadow-md shadow-teal-100";
+            }
+
+            for (var d in routeLayers) {
+                map.removeLayer(routeLayers[d]);
+            }
+
+            if (day === 0) {
+                map.setView([22.5350, 114.0000], 12);
+            } else {
+                routeLayers[day].addTo(map);
+                map.fitBounds(routeLayers[day].getBounds(), { padding: [50, 50] });
+            }
+        }
     </script>
 </body>
 </html>
